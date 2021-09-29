@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62.5%;
+    /* 1rem = 10px */
+}
+
+body{
+    display: flex;
+    gap: 1rem;
+    width: 45%;
+}
+
+    #TodoList-Container{
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+    }
+        #UserInput-Section {
+            display: flex;
+            width: 100%;
+            margin: auto;
+
+        }
+            #AddTask-input {
+                
+            }
+            
+            #AddTask-Btn {
+                
+            }
+
+        #TodoList-Section{
+            width: 100%;
+        }
+
+            #TodoList{
+                display: flex;
+                flex-direction: column;
+                list-style: none;
+            }
+                .listItem{
+                    font-size: 1.6rem;
+                }
+
+                .taskDoneStyle{
+                    text-decoration: line-through;
+                }
+
+    #Trash-Section{
+        
+    }
