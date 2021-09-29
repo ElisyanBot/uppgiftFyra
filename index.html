@@ -9,24 +9,29 @@
     <title>Uppgift fyra</title>
 </head>
 <body>
-    <section id="UserInput-Section">
-        <!-- user input -->
-        <input id="AddTask-Input" type="text">
-        <button for="AddTask-Input" id="AddTask-Btn"> Add Task </button>
-    </section>
-    
-    <section id="TodoList-Section">
-        <ul id="TodoList">
-            <!-- task goes here -->
-            <li class="listItem"></li>
-        </ul>
+    <section id="TodoList-Container">
+        <h2>todolist</h2>
+        <section id="UserInput-Section">
+            <!-- user input -->
+            <input id="AddTask-Input" type="text">
+            <button for="AddTask-Input" id="AddTask-Btn"> Add Task </button>
+        </section>
+        
+        <section id="TodoList-Section">
+            <ul id="TodoList">
+                <!-- task goes here -->
+                <li class="listItem">item one</li>
+            </ul>
+        </section>
     </section> 
 
-    <!-- <section id="Trash-Section">
-        <ul id="trashList">
-            <li class="listItem"></li>
+    <section id="Trash-Section">
+        <h2>trash</h2>
+        <ul id="TrashList">
+                <!-- deleted task goes here -->
+            <li class="listItem"> deleted </li>
         </ul>
-    </section> -->
+    </section>
 
     <script src="javaScript/script.js"></script>
 </body>

@@ -12,7 +12,9 @@ html{
 body{
     display: flex;
     gap: 1rem;
-    width: 45%;
+    width: 80%;
+    margin: auto;
+    justify-content: center;
 }
 
     #TodoList-Container{
@@ -38,7 +40,7 @@ body{
             width: 100%;
         }
 
-            #TodoList{
+            #TodoList, #TrashList{
                 display: flex;
                 flex-direction: column;
                 list-style: none;
@@ -52,5 +54,7 @@ body{
                 }
 
     #Trash-Section{
-        
+        display: flex;
+        flex-direction: column;
+        width: 40%;
     }

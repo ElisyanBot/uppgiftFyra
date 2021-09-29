@@ -24,21 +24,27 @@ function newElement(htmlTagType, addClass, addInnerText){
     return htmlElement;
 }
 
-//todo list body
-const taskHolder = document.querySelector('#TodoList');
-//addTask input
-const userInput = document.querySelector('#AddTask-Input').value;
-//add task btn
-const addTaskBtn = document.querySelector('#AddTask-Btn');
-    addTaskBtn.addEventListener('click', () => addTask());
-
-
-const TaskStorage = []
+//storage
+const taskStorage = []
 const trashStorage = []
 
-/*
-    test: userInput.length needs to be longer then zero
-*/
+//feting elements
+    const taskHolder = document.querySelector('#TodoList');
+    const trashTaskHolder = document.querySelector('#TrashList')
+    //addTask input
+    const userInput = document.querySelector('#AddTask-Input').value;
+    //add task btn
+    const addTaskBtn = document.querySelector('#AddTask-Btn');
+        //click event to display and create a new task.
+        addTaskBtn.addEventListener('click', () => {
+            //creates new task and stores it to taskStorage[]
+            addTask(userInput)
+            //display elemnt to window
+            let i = taskStorage.length;
+            displayTask(taskHolder, taskStorage[i].text, taskStorage[i].id)
+        });
+
+    
 
 /** Task factory function
  * 
@@ -62,21 +68,48 @@ function task(text, taskID){
  * 
  * pushes new task to taskStorage array.
  */
-function addTask(){
+function addTask(userInput){
     userInput.length < 1 ?
-        TaskStorage.push(new task(userInput)) :
-        console.log('userInput is smaller then one')
+        taskStorage.push(new task(userInput)) :
+        console.log('userInput is smaller then one');
 }
 
-const randomNumberMemory = [];
+const randomNumberHistory = [];
 
+/** creates a random number and checks if it allready exists */
 function randomNumber(){
     let number;
-        //creates an number //own function?
-        //check if it's in randomNumberMemory
-        //if exist redo
-        //else return number
-    return number
+    let allreadyExist = false;
+
+        do {
+          number = Math.floor(Math.random() * 10)
+          //check through stored randomnumber
+            for(let i = 0; i < randomNumberHistory; i++){
+                if (number ===  randomNumberHistory[i]) {
+                    allreadyExist = true;
+                } else { 
+                    randomNumberHistory.push(number)
+                    return number;
+                }
+            }
+        } while(allreadyExist === true);
 }
 
-function displayTask(where, innertext, id){}
+function displayTask(where, innertext, id){
+
+}
+
+/** loops through and delete one item from an array
+ * 
+ * @param {*array takes an array }
+ * @param {*indexValue what value the removed item should contain }
+ */
+function removeFromArray(array, indexValue){
+    array.forEach(element => {
+        element === indexValue ? 
+            array.splice(indexValue, 1) :
+            console.log('item do not exist')
+    });
+
+    return array //vill ha det som den inte tar bort...
+}
