@@ -34,8 +34,9 @@ function newElement(htmlTagType, addClass, addInnerText, elementID, inputType){
 }
 
 //storage
-const taskStorage = []
-const trashStorage = []
+const taskStorage = [];
+const trashStorage = [];
+let taskDoneCounter = 0;
 
 /**keeps track on items in todo list. */
 function countItems() {
@@ -44,6 +45,16 @@ function countItems() {
 
             TaskCount.innerText = taskStorage.length;
             TrashItemCount.innerText = trashStorage.length;
+}
+
+function trackTaskDone(setAsDoneBoolen) {
+    const completedTask = document.getElementById('#TaskDone');
+    //adds or remove from  taskDoneCounter
+    setAsDoneBoolen === true?
+        taskDoneCounter++ : taskDoneCounter--;
+    //prevents completedTasks to be lower then 0
+    taskDoneCounter < 0 ?
+        taskDoneCounter = 0 : completedTask.innerText = taskDoneCounter;
 }
 
 
@@ -94,6 +105,7 @@ function task(text, taskID){
             if(this.taskCompleteStatus === false){
                 this.taskCompleteStatus = true;
                 taskText.classList.add('taskDoneStyle')
+                
             } else {
                 this.taskCompleteStatus = false;
                 taskText.classList.remove('taskDoneStyle')
@@ -105,6 +117,9 @@ function task(text, taskID){
             //remove element
             const deletedElement = document.getElementById(`${this.taskID}`);
             removeTaskFromStorage(taskStorage, `${this.taskID}`);
+            //edit task done counter - 1
+            trackTaskDone(this.taskCompleteStatus)
+            //removes element from todo list
             deletedElement.remove();
             //display att trashcan
             trashStorage.push(new task(text, taskID))
@@ -123,15 +138,17 @@ function task(text, taskID){
                 const taskDeleteBtn = newElement('button', 'deleteBtnTask', 'X', `${id}_deleteBtnTask`);
                 displayedTask.appendChild(taskDeleteBtn);
 
-            //added functionality to elements
+            //added functionality to task elements
             taskDeleteBtn.addEventListener('click', () => this.deleteTask());
             taskCheckbox.addEventListener('click', () => {
                 this.setAsdone(`${id}_innerTextTask`);
+                trackTaskDone(this.taskCompleteStatus)
                 taskCheckbox.checked = this.taskCompleteStatus
             })
             //click on text to check textbox
             taskText.addEventListener('click', () => {
                 this.setAsdone(`${id}_innerTextTask`);
+                trackTaskDone(this.taskCompleteStatus)
                 taskCheckbox.checked = this.taskCompleteStatus
             })
 
