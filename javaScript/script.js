@@ -6,7 +6,7 @@
  * @returns new created html element
  */
 
-function newElement(htmlTagType, addClass, addInnerText, elementID){
+function newElement(htmlTagType, addClass, addInnerText, elementID, inputType){
     let htmlElement;
 
         htmlTagType !== null || undefined ? 
@@ -24,6 +24,10 @@ function newElement(htmlTagType, addClass, addInnerText, elementID){
          elementID !== null || undefined ?
             htmlElement.setAttribute('id', elementID) :
             htmlElement.removeAttribute('id');
+
+        inputType !== null || undefined ?
+            htmlElement.setAttribute('type', inputType) :
+            htmlElement.removeAttribute('type');
 
     
     return htmlElement;
@@ -64,7 +68,9 @@ const trashStorage = []
  * @param {*text takes userInput, used for innerText in htmlElement} 
  * @param {*taskID random number for each new task} 
  * @param {*setAsDone completes a task with new styling} 
- * @param {*deleteTask removes element from window and from TaskStorage Array} taskID 
+ * @param {*deleteTask removes element from window and from TaskStorage Array}
+ * @param {*DisplayTask displays task at parrent element}
+ * @param {*displayAtTrash displays task to trash section}
  * @returns new task object
  */
 function task(text, taskID){
@@ -72,23 +78,44 @@ function task(text, taskID){
         text,
         taskID,
         taskCompleteStatus: false,
-        setAsdone: function(){},
+        setAsdone: function(textID){
+            const taskText = document.getElementById(textID);
+            if(this.taskCompleteStatus === false){
+                this.taskCompleteStatus = true;
+                taskText.classList.add('taskDoneStyle')
+            } else {
+                this.taskCompleteStatus = false;
+                taskText.classList.remove('taskDoneStyle')
+            }   
+        },
         deleteTask: function(){
+            //resets complateStatus to false.
+            this.taskCompleteStatus = false;
+            //remove element
             const deletedElement = document.getElementById(`${this.taskID}`);
             deletedElement.remove();
+            //display att trashcan
             this.displayAtTrash(trashTaskHolder, this.text, this.taskID)
         },
         displayTask: function(parrent, innertext, id){
             const task = newElement('li', 'listItem', null, id);
                 parrent.appendChild(task);
+                //checkBox
+                const taskCheckbox = newElement('input', 'listItem', null, `${id}_checkboxTask`, 'checkbox');
+                task.appendChild(taskCheckbox);
                 //user input goes here
-                const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`);
+                const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`,);
                 task.appendChild(taskText);
                 //removes parrent element
                 const taskDeleteBtn = newElement('button', 'deleteBtn', 'delete', `${id}_deleteBtnTask`);
                 task.appendChild(taskDeleteBtn);
 
-            taskDeleteBtn.addEventListener('click', () => {this.deleteTask()});
+            //added functionality to elements
+            taskDeleteBtn.addEventListener('click', () => this.deleteTask());
+            taskCheckbox.addEventListener('click', () => {
+                this.setAsdone(`${id}_innerTextTask`);
+
+            })
         },
         displayAtTrash: function(parrent, innertext, id){
             const task = newElement('li', 'listItem', null, id);
@@ -96,20 +123,24 @@ function task(text, taskID){
                 //user input goes here
                 const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`);
                 task.appendChild(taskText);
-                //removes parrent element
+                //unde deletet from trash can
                 const taskDeleteUndoBtn = newElement('button', 'deleteBtn', 'undo', `${id}_deleteBtnUndoTask`);
                 task.appendChild(taskDeleteUndoBtn);
+                //delete it from storage and window
                 const taskTrashBtn = newElement('button', 'deleteBtn', 'trash', `${id}_deleteBtnTask`);
                 task.appendChild(taskTrashBtn);
 
             taskDeleteUndoBtn.addEventListener('click', () => {
+                //moves task back to todoList from trash can
+                this.displayTask(taskHolder, innertext, id)
                 task.remove();
-                this.displayTask(taskHolder, innertext, id)});
+            });
+
+            //removes from taskStorage and from window
              taskTrashBtn.addEventListener('click', () => {
+                 removeTaskFromStorage(taskStorage, `${this.taskID}`);
                  task.remove()
-                removeTaskFromStorage(taskStorage, `${this.taskID}`);
-                console.log(taskStorage)
-                })
+            })
         }
     }
 }
