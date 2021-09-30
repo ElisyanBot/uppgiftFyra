@@ -127,7 +127,12 @@ function task(text, taskID){
             taskDeleteBtn.addEventListener('click', () => this.deleteTask());
             taskCheckbox.addEventListener('click', () => {
                 this.setAsdone(`${id}_innerTextTask`);
-
+                taskCheckbox.checked = this.taskCompleteStatus
+            })
+            //click on text to check textbox
+            taskText.addEventListener('click', () => {
+                this.setAsdone(`${id}_innerTextTask`);
+                taskCheckbox.checked = this.taskCompleteStatus
             })
 
             //keep track of item in todo list
