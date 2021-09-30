@@ -83,6 +83,7 @@ function countItems() {
  * @param {*displayAtTrash displays task to trash section}
  * @returns new task object
  */
+
 function task(text, taskID){
     return{
         text,
@@ -113,13 +114,13 @@ function task(text, taskID){
             const displayedTask = newElement('li', 'listItem', null, id);
                 parrent.appendChild(displayedTask);
                 //checkBox
-                const taskCheckbox = newElement('input', 'listItem', null, `${id}_checkboxTask`, 'checkbox');
+                const taskCheckbox = newElement('input', 'checkbox', null, `${id}_checkboxTask`, 'checkbox');
                 displayedTask.appendChild(taskCheckbox);
                 //user input goes here
-                const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`,);
+                const taskText =  newElement('p', 'taskText', innertext.toString(), `${id}_innerTextTask`,);
                 displayedTask.appendChild(taskText);
                 //removes parrent element
-                const taskDeleteBtn = newElement('button', 'deleteBtn', 'delete', `${id}_deleteBtnTask`);
+                const taskDeleteBtn = newElement('button', 'deleteBtnTask', 'X', `${id}_deleteBtnTask`);
                 displayedTask.appendChild(taskDeleteBtn);
 
             //added functionality to elements
@@ -133,36 +134,37 @@ function task(text, taskID){
             countItems()
         },
         displayAtTrash: function(parrent, innertext, id){
-            const displayedTask = newElement('li', 'listItem', null, id);
+            const displayedTask = newElement('li', 'listItemTrash', null, id);
             parrent.appendChild(displayedTask);
                 //user input goes here
-                const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`);
-                displayedTask.appendChild(taskText);
+                const taskText =  newElement('p', 'trashTaskText', innertext.toString(), `${id}_innerTextTask`);
+                    displayedTask.appendChild(taskText);
                 //unde deletet from trash can
-                const taskDeleteUndoBtn = newElement('button', 'deleteBtn', 'undo', `${id}_deleteBtnUndoTask`);
-                displayedTask.appendChild(taskDeleteUndoBtn);
+                const taskDeleteUndoBtn = newElement('button', 'undoBtn', 'undo', `${id}_deleteBtnUndoTask`);
+                    displayedTask.appendChild(taskDeleteUndoBtn);
                 //delete task from storage and window
-                const taskTrashBtn = newElement('button', 'deleteBtn', 'trash', `${id}_deleteBtnTask`);
-                displayedTask.appendChild(taskTrashBtn);
+                const taskTrashBtn = newElement('button', 'trashBtn', 'trash', `${id}_deleteBtnTask`);
+                    displayedTask.appendChild(taskTrashBtn);
 
-            taskDeleteUndoBtn.addEventListener('click', () => {
-                //moves task back to todoList from trash can
-                this.displayTask(taskHolder, innertext, id)
-                taskStorage.push(new task(innertext, id))
+                //button functionality
+                taskDeleteUndoBtn.addEventListener('click', () => {
+                    //moves task back to todoList from trash can
+                    this.displayTask(taskHolder, innertext, id)
+                    taskStorage.push(new task(innertext, id))
 
-                //removes it from trashcan
-                displayedTask.remove();
-                removeTaskFromStorage(trashStorage, `${this.taskID}`);
-                countItems()
+                    //removes it from trashcan
+                    displayedTask.remove();
+                    removeTaskFromStorage(trashStorage, `${this.taskID}`);
+                    countItems()
 
-            });
+                    });
 
-            taskTrashBtn.addEventListener('click', () => {
-                 //removes from taskStorage and from window
-                 removeTaskFromStorage(trashStorage, `${this.taskID}`);
-                 displayedTask.remove()
-                countItems()
-            })
+                taskTrashBtn.addEventListener('click', () => {
+                    //removes from taskStorage and from window
+                    removeTaskFromStorage(trashStorage, `${this.taskID}`);
+                    displayedTask.remove()
+                    countItems()
+                })
 
             // keeps track on item in trash can
             countItems()
