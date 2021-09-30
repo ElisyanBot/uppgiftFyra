@@ -6,7 +6,7 @@
  * @returns new created html element
  */
 
-function newElement(htmlTagType, addClass, addInnerText){
+function newElement(htmlTagType, addClass, addInnerText, elementID){
     let htmlElement;
 
         htmlTagType !== null || undefined ? 
@@ -19,7 +19,12 @@ function newElement(htmlTagType, addClass, addInnerText){
         
         addInnerText !== null || undefined ?
             htmlElement.innerText = addInnerText :
-            htmlElement.innerText.remove();
+            htmlElement.innerText = htmlElement.innerText;
+        
+         elementID !== null || undefined ?
+            htmlElement.setAttribute('id', elementID) :
+            htmlElement.removeAttribute('id');
+
     
     return htmlElement;
 }
@@ -32,16 +37,24 @@ const trashStorage = []
     const taskHolder = document.querySelector('#TodoList');
     const trashTaskHolder = document.querySelector('#TrashList')
     //addTask input
-    const userInput = document.querySelector('#AddTask-Input').value;
+    const userInput = document.querySelector('#AddTask-Input');
+ 
     //add task btn
     const addTaskBtn = document.querySelector('#AddTask-Btn');
         //click event to display and create a new task.
         addTaskBtn.addEventListener('click', () => {
-            //creates new task and stores it to taskStorage[]
-            addTask(userInput)
-            //display elemnt to window
-            let i = taskStorage.length;
-            displayTask(taskHolder, taskStorage[i].text, taskStorage[i].id)
+            if (userInput.value.length > 0){
+                //creates new task and stores it to taskStorage[]
+                addTask(userInput.value)
+                //display element to window
+                let i = taskStorage.length - 1;
+                taskStorage[i].displayTask(taskHolder, taskStorage[i].text, taskStorage[i].taskID)
+                //resets input value
+                userInput.value = '';
+            } else {
+                console.log('ERR: userInput is smaller then 1')
+                alert('your task needs to contain atleast one or more characters')
+            }
         });
 
     
@@ -61,6 +74,18 @@ function task(text, taskID){
         taskCompleteStatus: false,
         setAsdone: function(){},
         deleteTask: function(){},
+        displayTask: function(parrentSection, innertext, id){
+            const task = newElement('li', 'listItem', null, id);
+                parrentSection.appendChild(task);
+                //user input goes here
+                const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`);
+                task.appendChild(taskText);
+                //removes parrent element
+                const taskDeleteBtn = newElement('button', 'deleteBtn', 'delete', `${id}_deleteBtnTask`);
+                task.appendChild(taskDeleteBtn);
+
+            // taskDeleteBtn.addEventListener(() => {this.deleteTask()});
+        }
     }
 }
 
@@ -69,35 +94,41 @@ function task(text, taskID){
  * pushes new task to taskStorage array.
  */
 function addTask(userInput){
-    userInput.length < 1 ?
-        taskStorage.push(new task(userInput)) :
-        console.log('userInput is smaller then one');
+        taskStorage.push(new task(userInput, randomNumber())) 
+        console.log(taskStorage)
 }
 
-const randomNumberHistory = [];
 
+const randomNumberHistory = [];
 /** creates a random number and checks if it allready exists */
 function randomNumber(){
-    let number;
-    let allreadyExist = false;
-
-        do {
-          number = Math.floor(Math.random() * 10)
+    let number = Math.floor(Math.random() * 10);
+    randomNumberHistory.push(number)
           //check through stored randomnumber
             for(let i = 0; i < randomNumberHistory; i++){
                 if (number ===  randomNumberHistory[i]) {
-                    allreadyExist = true;
+                    
                 } else { 
-                    randomNumberHistory.push(number)
                     return number;
                 }
             }
-        } while(allreadyExist === true);
+     
+    console.log(number, randomNumberHistory)
+    return number;
 }
 
-function displayTask(where, innertext, id){
+// function displayTask(where, innertext, id){
+//     const task = newElement('li', 'listItem', null, id);
+//     where.appendChild(task);
+//     //user input goes here
+//     const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`);
+//     task.appendChild(taskText);
+//     //removes parrent element
+//     const deleteBtn = newElement('button', 'deleteBtn', 'delete', `${id}_deleteBtnTask`);
+//     task.appendChild(deleteBtn);
 
-}
+//     deleteBtn.addEventListener(()=> {this.deleteTask});
+// }
 
 /** loops through and delete one item from an array
  * 
