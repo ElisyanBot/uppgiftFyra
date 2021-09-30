@@ -76,11 +76,11 @@ function task(text, taskID){
         deleteTask: function(){
             const deletedElement = document.getElementById(`${this.taskID}`);
             deletedElement.remove();
-            removeTaskFromStorage(taskStorage, `${this.taskID}`);
+            this.displayAtTrash(trashTaskHolder, this.text, this.taskID)
         },
-        displayTask: function(parrentSection, innertext, id){
+        displayTask: function(parrent, innertext, id){
             const task = newElement('li', 'listItem', null, id);
-                parrentSection.appendChild(task);
+                parrent.appendChild(task);
                 //user input goes here
                 const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`);
                 task.appendChild(taskText);
@@ -89,6 +89,27 @@ function task(text, taskID){
                 task.appendChild(taskDeleteBtn);
 
             taskDeleteBtn.addEventListener('click', () => {this.deleteTask()});
+        },
+        displayAtTrash: function(parrent, innertext, id){
+            const task = newElement('li', 'listItem', null, id);
+            parrent.appendChild(task);
+                //user input goes here
+                const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`);
+                task.appendChild(taskText);
+                //removes parrent element
+                const taskDeleteUndoBtn = newElement('button', 'deleteBtn', 'undo', `${id}_deleteBtnUndoTask`);
+                task.appendChild(taskDeleteUndoBtn);
+                const taskTrashBtn = newElement('button', 'deleteBtn', 'trash', `${id}_deleteBtnTask`);
+                task.appendChild(taskTrashBtn);
+
+            taskDeleteUndoBtn.addEventListener('click', () => {
+                task.remove();
+                this.displayTask(taskHolder, innertext, id)});
+             taskTrashBtn.addEventListener('click', () => {
+                 task.remove()
+                removeTaskFromStorage(taskStorage, `${this.taskID}`);
+                console.log(taskStorage)
+                })
         }
     }
 }
