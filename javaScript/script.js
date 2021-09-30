@@ -73,7 +73,11 @@ function task(text, taskID){
         taskID,
         taskCompleteStatus: false,
         setAsdone: function(){},
-        deleteTask: function(){},
+        deleteTask: function(){
+            const deletedElement = document.getElementById(`${this.taskID}`);
+            deletedElement.remove();
+            removeTaskFromStorage(taskStorage, `${this.taskID}`);
+        },
         displayTask: function(parrentSection, innertext, id){
             const task = newElement('li', 'listItem', null, id);
                 parrentSection.appendChild(task);
@@ -84,7 +88,7 @@ function task(text, taskID){
                 const taskDeleteBtn = newElement('button', 'deleteBtn', 'delete', `${id}_deleteBtnTask`);
                 task.appendChild(taskDeleteBtn);
 
-            // taskDeleteBtn.addEventListener(() => {this.deleteTask()});
+            taskDeleteBtn.addEventListener('click', () => {this.deleteTask()});
         }
     }
 }
@@ -95,26 +99,25 @@ function task(text, taskID){
  */
 function addTask(userInput){
         taskStorage.push(new task(userInput, randomNumber())) 
-        console.log(taskStorage)
 }
 
 
 const randomNumberHistory = [];
-/** creates a random number and checks if it allready exists */
+/** creates a random number and checks if it allready exists and if it exists it replaces the old number, not perfect... */
 function randomNumber(){
     let number = Math.floor(Math.random() * 10);
-    randomNumberHistory.push(number)
-          //check through stored randomnumber
-            for(let i = 0; i < randomNumberHistory; i++){
-                if (number ===  randomNumberHistory[i]) {
-                    
-                } else { 
-                    return number;
-                }
+        //checks if it allready exists
+        for (let index = 0; index < randomNumberHistory.length; index++) {
+            if (number === randomNumberHistory[index]) { 
+                number = Math.floor(Math.random(10) * 1000) //needs to become better..
+                randomNumberHistory.push(number)
+                console.log('pushed')
+                return number
             }
-     
-    console.log(number, randomNumberHistory)
-    return number;
+        }
+    
+    randomNumberHistory.push(number)
+    return number
 }
 
 // function displayTask(where, innertext, id){
@@ -135,11 +138,11 @@ function randomNumber(){
  * @param {*array takes an array }
  * @param {*indexValue what value the removed item should contain }
  */
-function removeFromArray(array, indexValue){
+function removeTaskFromStorage(array, indexValue){
     array.forEach(element => {
-        element === indexValue ? 
-            array.splice(indexValue, 1) :
-            console.log('item do not exist')
+        element.taskID.toString() === indexValue ? 
+            array.splice(element, 1) :
+            console.log('not a match')
     });
 
     return array //vill ha det som den inte tar bort...
