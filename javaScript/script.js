@@ -37,7 +37,17 @@ function newElement(htmlTagType, addClass, addInnerText, elementID, inputType){
 const taskStorage = []
 const trashStorage = []
 
-//feting elements
+/**keeps track on items in todo list. */
+function countItems() {
+    const TaskCount = document.getElementById('#TaskCount');
+    const TrashItemCount = document.getElementById('#TrashItemCount');
+
+            TaskCount.innerText = taskStorage.length;
+            TrashItemCount.innerText = trashStorage.length;
+}
+
+
+//fetching elements
     const taskHolder = document.querySelector('#TodoList');
     const trashTaskHolder = document.querySelector('#TrashList')
     //addTask input
@@ -93,22 +103,24 @@ function task(text, taskID){
             this.taskCompleteStatus = false;
             //remove element
             const deletedElement = document.getElementById(`${this.taskID}`);
+            removeTaskFromStorage(taskStorage, `${this.taskID}`);
             deletedElement.remove();
             //display att trashcan
+            trashStorage.push(new task(text, taskID))
             this.displayAtTrash(trashTaskHolder, this.text, this.taskID)
         },
         displayTask: function(parrent, innertext, id){
-            const task = newElement('li', 'listItem', null, id);
-                parrent.appendChild(task);
+            const displayedTask = newElement('li', 'listItem', null, id);
+                parrent.appendChild(displayedTask);
                 //checkBox
                 const taskCheckbox = newElement('input', 'listItem', null, `${id}_checkboxTask`, 'checkbox');
-                task.appendChild(taskCheckbox);
+                displayedTask.appendChild(taskCheckbox);
                 //user input goes here
                 const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`,);
-                task.appendChild(taskText);
+                displayedTask.appendChild(taskText);
                 //removes parrent element
                 const taskDeleteBtn = newElement('button', 'deleteBtn', 'delete', `${id}_deleteBtnTask`);
-                task.appendChild(taskDeleteBtn);
+                displayedTask.appendChild(taskDeleteBtn);
 
             //added functionality to elements
             taskDeleteBtn.addEventListener('click', () => this.deleteTask());
@@ -116,31 +128,44 @@ function task(text, taskID){
                 this.setAsdone(`${id}_innerTextTask`);
 
             })
+
+            //keep track of item in todo list
+            countItems()
         },
         displayAtTrash: function(parrent, innertext, id){
-            const task = newElement('li', 'listItem', null, id);
-            parrent.appendChild(task);
+            const displayedTask = newElement('li', 'listItem', null, id);
+            parrent.appendChild(displayedTask);
                 //user input goes here
                 const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`);
-                task.appendChild(taskText);
+                displayedTask.appendChild(taskText);
                 //unde deletet from trash can
                 const taskDeleteUndoBtn = newElement('button', 'deleteBtn', 'undo', `${id}_deleteBtnUndoTask`);
-                task.appendChild(taskDeleteUndoBtn);
-                //delete it from storage and window
+                displayedTask.appendChild(taskDeleteUndoBtn);
+                //delete task from storage and window
                 const taskTrashBtn = newElement('button', 'deleteBtn', 'trash', `${id}_deleteBtnTask`);
-                task.appendChild(taskTrashBtn);
+                displayedTask.appendChild(taskTrashBtn);
 
             taskDeleteUndoBtn.addEventListener('click', () => {
                 //moves task back to todoList from trash can
                 this.displayTask(taskHolder, innertext, id)
-                task.remove();
+                taskStorage.push(new task(innertext, id))
+
+                //removes it from trashcan
+                displayedTask.remove();
+                removeTaskFromStorage(trashStorage, `${this.taskID}`);
+                countItems()
+
             });
 
-            //removes from taskStorage and from window
-             taskTrashBtn.addEventListener('click', () => {
-                 removeTaskFromStorage(taskStorage, `${this.taskID}`);
-                 task.remove()
+            taskTrashBtn.addEventListener('click', () => {
+                 //removes from taskStorage and from window
+                 removeTaskFromStorage(trashStorage, `${this.taskID}`);
+                 displayedTask.remove()
+                countItems()
             })
+
+            // keeps track on item in trash can
+            countItems()
         }
     }
 }
@@ -150,7 +175,7 @@ function task(text, taskID){
  * pushes new task to taskStorage array.
  */
 function addTask(userInput){
-        taskStorage.push(new task(userInput, randomNumber())) 
+        taskStorage.push(new task(userInput, randomNumber()))
 }
 
 
@@ -172,18 +197,6 @@ function randomNumber(){
     return number
 }
 
-// function displayTask(where, innertext, id){
-//     const task = newElement('li', 'listItem', null, id);
-//     where.appendChild(task);
-//     //user input goes here
-//     const taskText =  newElement('p', 'listItem', innertext.toString(), `${id}_innerTextTask`);
-//     task.appendChild(taskText);
-//     //removes parrent element
-//     const deleteBtn = newElement('button', 'deleteBtn', 'delete', `${id}_deleteBtnTask`);
-//     task.appendChild(deleteBtn);
-
-//     deleteBtn.addEventListener(()=> {this.deleteTask});
-// }
 
 /** loops through and delete one item from an array
  * 
@@ -197,5 +210,5 @@ function removeTaskFromStorage(array, indexValue){
             console.log('not a match')
     });
 
-    return array //vill ha det som den inte tar bort...
+    return array //kanske inte behövs... tror at jag tänkte använda den till något jestjs test...
 }
