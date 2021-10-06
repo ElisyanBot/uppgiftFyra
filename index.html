@@ -4,35 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="CSS/style.css">
 
     <title>Uppgift fyra</title>
 </head>
 <body>
+    <!-- skriv en nav -->
+    <header>
+        <nav>
+
+        </nav>
+    </header>
+
     <section id="TodoList-Container">
-        <h2>todolist</h2>
-        <h2 id="#TaskCount"> 0 </h2>
-        <section id="UserInput-Section">
-            <!-- user input -->
-            <input id="AddTask-Input" type="text">
-            <button for="AddTask-Input" id="AddTask-Btn"> Add Task </button>
-        </section>
+        <div id="input-container">
+            <h2> Task done:   <span id="#TaskDone"> 0 </span> </h2>
+            <!-- <h2 id="#TaskCount"> 0 </h2> -->
+            <section id="UserInput-Section">
+                <!-- user input -->
+                <input id="AddTask-Input" type="text">
+                <button for="AddTask-Input" id="AddTask-Btn"> + </button>
+            </section>
+        </div>
         
         <section id="TodoList-Section">
             <ul id="TodoList">
                 <!-- task goes here -->
             </ul>
         </section>
-        <h2> task done:   <span id="#TaskDone"> 0 </span> </h2>
-      
-    </section> 
-
-    <section id="Trash-Section">
-        <h2>Trashcan</h2>
-        <h2 id="#TrashItemCount"> 0 </h2>
-        <ul id="TrashList">
-                <!-- deleted task goes here -->
-        </ul>
     </section>
 
     <script src="javaScript/script.js"></script>

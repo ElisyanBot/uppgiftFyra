@@ -1,0 +1,189 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62.5%;
+    /* 1rem = 10px */
+}
+
+body{
+display: flex;
+flex-direction: column;
+align-content: center;
+background-color: #ACACAC;
+
+}
+
+    #TodoList-Container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 5rem;
+    }
+    
+    #input-container{
+        margin:0 0 1.5rem 0;
+    }
+    #input-container > h2{
+        align-self: flex-start;
+        margin: 1rem;
+    }
+        #UserInput-Section {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: white;
+            width: 40rem;
+            height: 8rem;
+
+            border-radius: 0.5rem;
+            box-shadow: 0px 5px 10px rgba(60, 60, 60, 0.775);
+
+        }
+            #AddTask-Input {
+                display: flex;
+                background-color: white;
+                border: none;
+                border-bottom: 1px solid #8D8D8D;
+                width: 75%;
+                height: 5rem;
+
+                padding: 2rem 0 0 1rem;
+                
+                color: rgb(107, 107, 107);
+                font-size: 1.8rem;
+                font-weight: lighter;
+                letter-spacing: 0.2rem;
+            }
+            
+            #AddTask-Btn {
+                background-color: #FFD074;
+                width: 4rem;
+                height: 4rem;
+
+                border: none;
+                border-radius: 0.5rem;
+
+                color: white;
+                font-size: 3rem;
+              
+            }
+                #AddTask-Btn:hover{  
+                    background-color: #b38426;
+                    cursor: pointer;
+                }
+
+        #TodoList-Section{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 40rem;
+            height: fit-content;
+        }
+
+            #TodoList{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                width: 90%;
+            }
+                .listItem{
+                    background-color: white;
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+
+                    width: 30rem;
+                    min-height: 7.1rem;
+                    height: fit-content;
+                    padding: 1rem 0;
+
+                    border-radius: 0.3rem;
+                    margin: 1rem 0;
+                    box-shadow: -1px 5px 10px rgba(60, 60, 60, 0.775);
+                }
+
+                .listItem > p{
+                    width: 60%;
+                    font-size: 1.6rem;
+                    padding: 0 1rem;
+                    height: fit-content;
+                    letter-spacing: 0.15rem;
+                }
+
+                    .listItem > p:hover{
+                        cursor: pointer;
+                        font-weight: 700;
+                    }
+            
+                .listItem > div{
+                    background-color: #A6D8E8;
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    border-radius: 0.3rem;
+
+                    margin-right: 1.5rem;
+                    margin-left: 2rem;
+                }
+            
+                .listItem > button{
+                    background-color: #FF9574;
+                    width: 3rem;
+                    height: 3rem;
+
+                    border:none;
+                    border-radius: 0.3rem;
+
+                    color: white;
+                    font-size: 1.6rem;
+                    font-weight: bold;
+
+                    transform: translateX(6.4rem);
+                } 
+                
+                .listItem > button:hover{
+                    background-color: #9b3b1e;
+                    cursor: pointer;
+                }
+            
+
+                    .taskDoneStyle{
+                       text-decoration: line-through;
+                    }
+
+
+    #TaskCount,  #TrashList, .listItemTrash,  #Trash-Section, .undoBtn, .trashBtn, .trashTaskText, .listItemTrash{
+        display: none;
+        
+    }
+
+
+    
+    .listItem-rev > button:hover{
+        background-color: #9b3b1e;
+        cursor: pointer;
+    }
+    
+    
+    .checked{
+        background-color: #C1F4C7 !important;
+    }
+    
+    /*reversed list item*/
+
+    li:nth-child(even){
+        flex-direction: row-reverse;
+        align-self: flex-end;
+    }
+
+    li:nth-child(even) > button{
+        transform: translateX(-6rem);
+    }
+
+    li:nth-child(even) > div{
+        margin-right: 2rem;
+        margin-left: 1.5rem;
+    }
