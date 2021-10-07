@@ -13,21 +13,146 @@ body{
 display: flex;
 flex-direction: column;
 align-content: center;
-background-color: #ACACAC;
+background-color: #83B4C3;
 
 }
 
-    #TodoList-Container{
+header{
+    background-color: #FF9574;
+
+    display: flex;
+    justify-content: center;
+}
+
+/*--- wrapper ---*/
+header > div{
+    position: relative;
+    align-self: flex-end;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    max-width: 80rem;
+    height: 19rem;
+}
+
+/*----------- theme button and drop meny ----------*/
+    header > div > nav{
+        align-self: end;
+        /* background-color: red; */
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        position: relative;
+        width: 30rem;
+        height:fit-content;
+
+        transform: translateY(2rem) ;
+    }   
+    
+            nav > div{
+                position: absolute;
+                background-color: #F0F0F0;
+                width: 50%;
+                height: 6rem;
+
+                transform: translate(7.5rem, 3.5rem);
+                z-index: 0;
+
+                border-radius: 0.3rem;
+                box-shadow: 2px 3px 5px rgb(58, 55, 55);
+                /* display: none; */
+            }    
+                nav > div > ul{
+                    margin: auto;
+                    width: 80%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+
+                    list-style: none;
+                }
+
+                nav > div > ul > li{
+                    background-color: red;
+                    width: 2rem;
+                    height: 2rem;
+                    border-radius: 2rem;
+                }
+                    nav > div > ul > li:hover{
+                        transform: scale(1.2);
+                        cursor: pointer;
+                    }
+                    /* theme background img */
+                    #color1{
+                        background-image: url(../img/myStyle-themeImg.jpg);
+                        background-position: center;
+                    }
+                    #color2{
+                        background-image: url(../img/style-theme2.png);
+                        background-position: center;
+
+                    }
+                    #color3{
+                        background-image: url(../img/style-theme3.png);
+                        background-position: center;
+
+                    }
+                    #color4{
+                        background-image: url(../img/style-theme4.png);
+                        background-position: center;
+                    }
+
+            #theme-meny{
+                background-color: #FFD074;
+                
+                width: 5rem;
+                height: 4.5rem;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                border: none;
+                border-radius: 0.5rem;
+                z-index: 2;
+
+                box-shadow: 2px 2px 5px rgb(58, 55, 55);
+            }
+
+                #theme-meny:hover{
+                    cursor: pointer;
+                    background-color: #b38426;
+                } 
+            
+            #theme-meny > i{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                width: 2.5rem;
+                height: 2.5rem;
+
+                font-size: 3rem;
+                border: none;
+                z-index: 2;
+            }
+    /*--------- input container starts here ----------*/
+    #input-container{
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 5rem;
     }
     
-    #input-container{
+    #input-wrapper{
         margin:0 0 1.5rem 0;
     }
-    #input-container > h2{
+    #input-wrapper > h2{
         align-self: flex-start;
         margin: 1rem;
     }
@@ -76,11 +201,14 @@ background-color: #ACACAC;
                     cursor: pointer;
                 }
 
+/*---------------------------------- main content -------------------------------------------*/
         #TodoList-Section{
+            align-self: center;
+
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             align-items: center;
-            width: 40rem;
+            width: 75rem;
             height: fit-content;
         }
 
@@ -88,7 +216,10 @@ background-color: #ACACAC;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
-                width: 90%;
+                align-items: flex-start;
+                width: 50%;
+
+                margin-top: 1rem;
             }
                 .listItem{
                     background-color: white;
@@ -130,7 +261,7 @@ background-color: #ACACAC;
                 }
             
                 .listItem > button{
-                    background-color: #FF9574;
+                    background-color: #FF7A5B;
                     width: 3rem;
                     height: 3rem;
 
@@ -153,14 +284,6 @@ background-color: #ACACAC;
                     .taskDoneStyle{
                        text-decoration: line-through;
                     }
-
-
-    #TaskCount,  #TrashList, .listItemTrash,  #Trash-Section, .undoBtn, .trashBtn, .trashTaskText, .listItemTrash{
-        display: none;
-        
-    }
-
-
     
     .listItem-rev > button:hover{
         background-color: #9b3b1e;
@@ -174,16 +297,16 @@ background-color: #ACACAC;
     
     /*reversed list item*/
 
-    li:nth-child(even){
+    .listItem:nth-child(even){
         flex-direction: row-reverse;
         align-self: flex-end;
     }
 
-    li:nth-child(even) > button{
+    .listItem:nth-child(even) > button{
         transform: translateX(-6rem);
     }
 
-    li:nth-child(even) > div{
+    .listItem:nth-child(even) > div{
         margin-right: 2rem;
         margin-left: 1.5rem;
     }

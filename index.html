@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://kit.fontawesome.com/1c11390acb.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,21 +12,32 @@
 <body>
     <!-- skriv en nav -->
     <header>
+    <div>
         <nav>
-
+            <button id="theme-meny">
+                <i class="fas fa-paint-roller"></i>
+            </button>
+                <div>
+                    <ul>
+                        <li href="#" id="color1"></li>
+                        <li href="#"  id="color2"></li>
+                        <li href="#"  id="color3"></li>
+                        <li href="#"  id="color4"></li>
+                    </ul>
+                </div>   
         </nav>
-    </header>
-
-    <section id="TodoList-Container">
         <div id="input-container">
-            <h2> Task done:   <span id="#TaskDone"> 0 </span> </h2>
-            <!-- <h2 id="#TaskCount"> 0 </h2> -->
-            <section id="UserInput-Section">
-                <!-- user input -->
-                <input id="AddTask-Input" type="text">
-                <button for="AddTask-Input" id="AddTask-Btn"> + </button>
-            </section>
+            <div id="input-wrapper">
+                <h2> Task done:   <span id="#TaskDone"> 0 </span> </h2>
+                <!-- <h2 id="#TaskCount"> 0 </h2> -->
+                <section id="UserInput-Section">
+                    <!-- user input -->
+                    <input id="AddTask-Input" type="text">
+                    <button for="AddTask-Input" id="AddTask-Btn"> + </button>
+                </section>
+            </div>
         </div>
+    </header>
         
         <section id="TodoList-Section">
             <ul id="TodoList">
