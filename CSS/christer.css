@@ -262,14 +262,14 @@ header > div{
                 }
             
                 .listItem > button{
-                    width: 3rem;
-                    height: 3rem;
+                    width: 2rem;
+                    height: 2rem;
                     background-color: #a7a7a7;
                     border:none;
                     border-radius: 0.3rem;
 
                     color: white;
-                    font-size: 2rem;
+                    font-size: 1.2rem;
 
                 } 
                 
