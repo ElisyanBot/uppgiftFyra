@@ -192,3 +192,9 @@ function removeTaskFromStorage(array, indexIdValue){
         })
         // return array //kanske inte behövs... tror at jag tänkte använda den till något jestjs test...
 }
+
+
+function changeTheme(styleCSS){
+    const styleLink = document.querySelector('link');
+    styleLink.href = styleCSS
+}
